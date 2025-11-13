@@ -644,8 +644,8 @@ ag:provenance rdf:type owl:DatatypeProperty ;
 ag:responsibilityStatement rdf:type owl:DatatypeProperty ;
                            rdfs:domain ag:Instance ;
                            rdfs:comment "リソースの責任に関わる表示"@ja ;
-                           rdfs:label "Responsibility Statement"@en ,
-                                      "責任表示"@ja .
+                           rdfs:label "Credit"@en ,
+                                      "クレジット"@ja .
 
 
 ###  https://www.analoggamemuseum.org/ontology/roleName
