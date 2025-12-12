@@ -606,7 +606,7 @@ ag:modelNumber rdf:type owl:DatatypeProperty ;
                rdfs:label "型番"@ja .
 
 ###  https://www.analoggamemuseum.org/ontology/catalogingDataStatus
-ag:name rdf:type owl:DatatypeProperty ;
+ag:catalogingDataStatus rdf:type owl:DatatypeProperty ;
         rdfs:comment "AIが作成したのか人間が作成したのかなど目録データの状況を示す"@ja ;
         rdfs:label "Cataloging Data Status"@en ,
                    "目録データステータス"@ja .
