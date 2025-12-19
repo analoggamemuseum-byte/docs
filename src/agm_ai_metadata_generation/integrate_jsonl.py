@@ -14,6 +14,50 @@ from collections import defaultdict
 from typing import Dict, List, Any, Set
 from urllib.parse import urlencode
 
+# CSV列名マッピング（entity type → ag:プレフィックス付き列名）
+COLUMN_NAME_MAPPING = {
+    "instanceID": "o:id",
+    "cleaned_text": "ag:packageText",
+    "sources": "sources",
+    "audience": "ag:audience",
+    "award": "ag:freeword",
+    "barcode": "ag:barcode",
+    "category": "ag:freeword",
+    "character": "ag:freeword",
+    "contact_point": "ag:contactPoint",
+    "crowdfunding_platform": "ag:freeword",
+    "date": "ag:datePublished",
+    "datePublished": "ag:datePublished",
+    "datePulished": "ag:datePublished",
+    "date_published": "ag:datePublished",
+    "designer": "ag:designer",
+    "educational": "ag:freeword",
+    "expansion_for": "ag:freeword",
+    "game_type": "ag:freeword",
+    "illustrator": "ag:illustrator",
+    "location": "ag:freeword",
+    "location_published": "ag:freeword",
+    "made_in": "ag:freeword",
+    "mechanics": "ag:mechanic",
+    "model_number": "ag:modelNumber",
+    "motif": "ag:freeword",
+    "number_of_players": "ag:numberOfPlayers",
+    "number_ofplayers": "ag:numberOfPlayers",
+    "play_time": "ag:playTime",
+    "price": "ag:price",
+    "product_name": "ag:alternateName",
+    "publisher": "ag:publisher",
+    "responsibility_statement": "ag:responsibilityStatement",
+    "stage": "ag:freeword",
+    "version": "ag:version",
+    "volume": "ag:volume",
+}
+
+
+def map_column_name(column_name: str) -> str:
+    """列名をマッピングに従って変換"""
+    return COLUMN_NAME_MAPPING.get(column_name, column_name)
+
 
 def extract_id_from_source(source: str) -> str:
     """sourceフィールドからハイフンの前のIDを抽出"""
@@ -24,20 +68,24 @@ def extract_id_from_source(source: str) -> str:
 
 
 def load_id_instance_mapping(sparql_endpoint: str) -> Dict[str, str]:
-    """SPARQLエンドポイントからitemIDとinstanceIDのマッピングを取得"""
-    sparql_query = """
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX madb: <https://mediaarts-db.bunka.go.jp/data/property#>
-PREFIX ag: <https://www.analoggamemuseum.org/ontology/>
-PREFIX o: <http://omeka.org/s/vocabs/o#>
+    """SPARQLエンドポイントからitemIDとinstanceIDのマッピングを取得。
 
-SELECT ?itemID ?instanceID WHERE {
-  ?item ag:identifier ?itemID .
-  ?item ag:exemplarOf ?tabletopgames .
-  ?tabletopgames o:id ?instanceID .
-}
+    SPARQLから何も取得できなかった場合は、ローカルCSV `ref/oid_and_itemID.csv`
+    からマッピングを読み込むフォールバックを行う。
+    """
+    sparql_query = """
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX madb: <https://mediaarts-db.bunka.go.jp/data/property#>
+    PREFIX ag: <https://www.analoggamemuseum.org/ontology/>
+    PREFIX o: <http://omeka.org/s/vocabs/o#>
+
+    SELECT ?itemID ?instanceID WHERE {
+    ?item ag:identifier ?itemID .
+    ?item ag:exemplarOf ?tabletopgames .
+    ?tabletopgames o:id ?instanceID .
+    }
 """
     
     headers = {
@@ -68,9 +116,42 @@ SELECT ?itemID ?instanceID WHERE {
                     instance_id = binding['instanceID'].get('value', '')
                     if item_id and instance_id:
                         mapping[item_id] = instance_id
-        
-        print(f"IDマッピングを {len(mapping)} 件取得しました")
-        return mapping
+
+        if mapping:
+            print(f"IDマッピングを {len(mapping)} 件取得しました（SPARQL）")
+            # 代表的なキーをいくつか表示
+            sample_keys = list(mapping.keys())[:10]
+            print(f"  例: {sample_keys}")
+            return mapping
+        else:
+            print("警告: SPARQLからIDマッピングを取得できませんでした（0件）")
+            print("       ローカルCSV `ref/oid_and_itemID.csv` からのフォールバックを試みます")
+
+            # スクリプトのあるディレクトリからの相対パスでCSVを探す
+            script_dir = Path(__file__).resolve().parent
+            csv_path = script_dir / "ref" / "oid_and_itemID.csv"
+
+            if not csv_path.exists():
+                print(f"警告: フォールバック用CSVが見つかりませんでした: {csv_path}")
+                return {}
+
+            try:
+                csv_mapping: Dict[str, str] = {}
+                with csv_path.open("r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        item_id = row.get("id", "").strip('"')
+                        instance_id = row.get("instanceID", "").strip('"')
+                        if item_id and instance_id:
+                            csv_mapping[item_id] = instance_id
+
+                print(f"IDマッピングを {len(csv_mapping)} 件取得しました（CSVフォールバック）")
+                sample_keys = list(csv_mapping.keys())[:10]
+                print(f"  例: {sample_keys}")
+                return csv_mapping
+            except Exception as csv_e:
+                print(f"警告: フォールバック用CSVの読み込みに失敗しました: {csv_e}")
+                return {}
         
     except Exception as e:
         print(f"警告: SPARQLクエリの実行に失敗しました: {e}")
@@ -300,7 +381,12 @@ def integrate_jsonl(
     # 統合されたオブジェクトをCSVとして保存（区切り文字: ,、多値結合: ||）
     with open(output_csv_path, "w", encoding="utf-8", newline="") as f:
         # 基本フィールド + entity type列 + ag:catalogingDataStatus（最後の列）
-        fieldnames = ["id", "instanceID", "cleaned_text", "sources"] + entity_type_columns + ["ag:catalogingDataStatus"]
+        # 列名をマッピングに従って変換
+        base_fieldnames = ["id", "instanceID", "cleaned_text", "sources"]
+        mapped_base_fieldnames = [map_column_name(fn) if fn != "id" else fn for fn in base_fieldnames]
+        mapped_entity_columns = [map_column_name(et) for et in entity_type_columns]
+        fieldnames = mapped_base_fieldnames + mapped_entity_columns + ["ag:catalogingDataStatus"]
+        
         writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
         
@@ -310,21 +396,22 @@ def integrate_jsonl(
             # instanceIDが既存メタデータのoidと一致する場合はentitiesとag:catalogingDataStatusを除外
             is_existing_metadata = instance_id and instance_id in existing_oids
             
-            # 基本フィールド
+            # 基本フィールド（マッピング後の列名を使用）
             row = {
                 "id": obj.get("id", ""),
-                "instanceID": instance_id,
-                "cleaned_text": obj.get("cleaned_text", ""),
-                "sources": "||".join(obj.get("sources", [])),
+                map_column_name("instanceID"): instance_id,
+                map_column_name("cleaned_text"): obj.get("cleaned_text", ""),
+                map_column_name("sources"): "||".join(obj.get("sources", [])),
                 "ag:catalogingDataStatus": "" if is_existing_metadata else "収蔵品の写真を元にAIで自動生成した目録データです"
             }
             
             if is_existing_metadata:
                 entities_excluded_count += 1
                 print(f"entities除外: instanceID={instance_id} は既存メタデータのためentitiesを除外（cleaned_textは追加）")
-                # entitiesの列は全て空にする
+                # entitiesの列は全て空にする（マッピング後の列名を使用）
                 for entity_type in entity_type_columns:
-                    row[entity_type] = ""
+                    mapped_column = map_column_name(entity_type)
+                    row[mapped_column] = ""
             else:
                 # entitiesをtypeごとにグループ化
                 entities_by_type: Dict[str, List[str]] = defaultdict(list)
@@ -336,10 +423,11 @@ def integrate_jsonl(
                         if entity_text not in entities_by_type[entity_type]:
                             entities_by_type[entity_type].append(entity_text)
                 
-                # 各entity typeの値を||で結合（スペースなし）
+                # 各entity typeの値を||で結合（スペースなし、マッピング後の列名を使用）
                 for entity_type in entity_type_columns:
+                    mapped_column = map_column_name(entity_type)
                     values = entities_by_type.get(entity_type, [])
-                    row[entity_type] = "||".join(values) if values else ""
+                    row[mapped_column] = "||".join(values) if values else ""
             
             writer.writerow(row)
         
