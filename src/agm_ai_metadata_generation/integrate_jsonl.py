@@ -8,9 +8,11 @@ JSONLファイルを統合するスクリプト
 
 import json
 import csv
+import requests
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Any, Set
+from urllib.parse import urlencode
 
 
 def extract_id_from_source(source: str) -> str:
@@ -21,16 +23,59 @@ def extract_id_from_source(source: str) -> str:
     return Path(source).stem
 
 
-def load_csv_mapping(csv_path: str) -> Dict[str, str]:
-    """CSVファイルからIDとinstanceIDのマッピングを読み込む"""
+def load_id_instance_mapping(sparql_endpoint: str) -> Dict[str, str]:
+    """SPARQLエンドポイントからitemIDとinstanceIDのマッピングを取得"""
+    sparql_query = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX madb: <https://mediaarts-db.bunka.go.jp/data/property#>
+PREFIX ag: <https://www.analoggamemuseum.org/ontology/>
+PREFIX o: <http://omeka.org/s/vocabs/o#>
+
+SELECT ?itemID ?instanceID WHERE {
+  ?item ag:identifier ?itemID .
+  ?item ag:exemplarOf ?tabletopgames .
+  ?tabletopgames o:id ?instanceID .
+}
+"""
+    
+    headers = {
+        'Accept': 'application/sparql-results+json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    
+    data = {'query': sparql_query}
+    
     mapping = {}
-    with open(csv_path, "r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            id_val = row["id"].strip('"')
-            instance_id = row["instanceID"].strip('"')
-            mapping[id_val] = instance_id
-    return mapping
+    
+    try:
+        print(f"SPARQLエンドポイントからIDマッピングを取得中: {sparql_endpoint}")
+        response = requests.post(
+            sparql_endpoint,
+            headers=headers,
+            data=urlencode(data),
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        
+        if 'results' in result and 'bindings' in result['results']:
+            for binding in result['results']['bindings']:
+                if 'itemID' in binding and 'instanceID' in binding:
+                    item_id = binding['itemID'].get('value', '')
+                    instance_id = binding['instanceID'].get('value', '')
+                    if item_id and instance_id:
+                        mapping[item_id] = instance_id
+        
+        print(f"IDマッピングを {len(mapping)} 件取得しました")
+        return mapping
+        
+    except Exception as e:
+        print(f"警告: SPARQLクエリの実行に失敗しました: {e}")
+        print("IDマッピングを空で続行します")
+        return {}
 
 
 def merge_cleaned_texts(texts: List[str]) -> str:
@@ -88,17 +133,78 @@ def merge_sections(sections_list: List[List[Dict[str, Any]]]) -> List[Dict[str, 
     return merged_sections
 
 
+def get_existing_metadata_oids(sparql_endpoint: str) -> Set[str]:
+    """
+    SPARQLエンドポイントから、既に人間が作成したメタデータのoidを取得
+    count(?o) >= 15 のoidを返す
+    """
+    sparql_query = """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX madb: <https://mediaarts-db.bunka.go.jp/data/property#>
+PREFIX ag: <https://www.analoggamemuseum.org/ontology/>
+PREFIX o: <http://omeka.org/s/vocabs/o#>
+
+SELECT ?ttg ?oid (COUNT(?o) AS ?count) WHERE {
+  ?ttg a ag:TableTopGame ;
+	o:id ?oid ;
+  ?p ?o .
+} 
+GROUP BY ?ttg ?oid
+HAVING (COUNT(?o) >= 15)
+"""
+    
+    headers = {
+        'Accept': 'application/sparql-results+json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    
+    data = {'query': sparql_query}
+    
+    try:
+        print(f"SPARQLエンドポイントにクエリを送信中: {sparql_endpoint}")
+        response = requests.post(
+            sparql_endpoint,
+            headers=headers,
+            data=urlencode(data),
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        oids = set()
+        
+        if 'results' in result and 'bindings' in result['results']:
+            for binding in result['results']['bindings']:
+                if 'oid' in binding and 'value' in binding['oid']:
+                    oid = binding['oid']['value']
+                    count = binding.get('count', {}).get('value', '0')
+                    oids.add(oid)
+                    print(f"  既存メタデータ発見: oid={oid}, count={count}")
+        
+        print(f"既存メタデータのoid数: {len(oids)}")
+        return oids
+        
+    except Exception as e:
+        print(f"警告: SPARQLクエリの実行に失敗しました: {e}")
+        print("既存メタデータのチェックをスキップします")
+        return set()
+
+
 def integrate_jsonl(
     input_jsonl_path: str,
     output_jsonl_path: str,
     output_csv_path: str,
-    csv_path: str
+    sparql_endpoint: str = "https://dydra.com/fukudakz/agmsearchendpoint/sparql"
 ) -> None:
     """JSONLファイルを統合し、JSONLとCSVの両方を出力"""
     
-    # CSVマッピングを読み込む
-    id_to_instance = load_csv_mapping(csv_path)
-    print(f"CSVから {len(id_to_instance)} 件のマッピングを読み込みました")
+    # 既存メタデータのoidを取得
+    existing_oids = get_existing_metadata_oids(sparql_endpoint)
+    
+    # SPARQLからIDマッピングを取得
+    id_to_instance = load_id_instance_mapping(sparql_endpoint)
     
     # IDごとにオブジェクトをグループ化
     grouped: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
@@ -160,7 +266,16 @@ def integrate_jsonl(
     # 統合されたオブジェクトをJSONLとして保存
     with open(output_jsonl_path, "w", encoding="utf-8") as f:
         for obj in integrated_objects:
-            f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+            # instanceIDが既存メタデータのoidと一致する場合はentitiesを除外
+            instance_id = obj.get("instanceID", "")
+            if instance_id and instance_id in existing_oids:
+                # entitiesを除外したコピーを作成
+                obj_copy = obj.copy()
+                obj_copy["entities"] = []
+                # ag:catalogingDataStatusは空にする（JSONLには含めない）
+                f.write(json.dumps(obj_copy, ensure_ascii=False) + "\n")
+            else:
+                f.write(json.dumps(obj, ensure_ascii=False) + "\n")
     
     # sectionsのtype（CSVの列から除外する、大文字小文字を区別しない）
     section_types_lower = {
@@ -179,38 +294,57 @@ def integrate_jsonl(
     # entity typeをソートして列順を固定
     entity_type_columns = sorted(all_entity_types)
     
+    # 既存メタデータでentitiesを除外したオブジェクト数をカウント
+    entities_excluded_count = 0
+    
     # 統合されたオブジェクトをCSVとして保存（区切り文字: ,、多値結合: ||）
     with open(output_csv_path, "w", encoding="utf-8", newline="") as f:
-        # 基本フィールド + entity type列
-        fieldnames = ["id", "instanceID", "cleaned_text", "sources"] + entity_type_columns
+        # 基本フィールド + entity type列 + ag:catalogingDataStatus（最後の列）
+        fieldnames = ["id", "instanceID", "cleaned_text", "sources"] + entity_type_columns + ["ag:catalogingDataStatus"]
         writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
         
         for obj in integrated_objects:
+            instance_id = obj.get("instanceID", "")
+            
+            # instanceIDが既存メタデータのoidと一致する場合はentitiesとag:catalogingDataStatusを除外
+            is_existing_metadata = instance_id and instance_id in existing_oids
+            
             # 基本フィールド
             row = {
                 "id": obj.get("id", ""),
-                "instanceID": obj.get("instanceID", ""),
+                "instanceID": instance_id,
                 "cleaned_text": obj.get("cleaned_text", ""),
-                "sources": "||".join(obj.get("sources", []))
+                "sources": "||".join(obj.get("sources", [])),
+                "ag:catalogingDataStatus": "" if is_existing_metadata else "収蔵品の写真を元にAIで自動生成した目録データです"
             }
             
-            # entitiesをtypeごとにグループ化
-            entities_by_type: Dict[str, List[str]] = defaultdict(list)
-            for entity in obj.get("entities", []):
-                entity_type = entity.get("type", "")
-                entity_text = entity.get("text", "").strip()
-                if entity_type and entity_text:
-                    # 重複を避ける
-                    if entity_text not in entities_by_type[entity_type]:
-                        entities_by_type[entity_type].append(entity_text)
-            
-            # 各entity typeの値を||で結合（スペースなし）
-            for entity_type in entity_type_columns:
-                values = entities_by_type.get(entity_type, [])
-                row[entity_type] = "||".join(values) if values else ""
+            if is_existing_metadata:
+                entities_excluded_count += 1
+                print(f"entities除外: instanceID={instance_id} は既存メタデータのためentitiesを除外（cleaned_textは追加）")
+                # entitiesの列は全て空にする
+                for entity_type in entity_type_columns:
+                    row[entity_type] = ""
+            else:
+                # entitiesをtypeごとにグループ化
+                entities_by_type: Dict[str, List[str]] = defaultdict(list)
+                for entity in obj.get("entities", []):
+                    entity_type = entity.get("type", "")
+                    entity_text = entity.get("text", "").strip()
+                    if entity_type and entity_text:
+                        # 重複を避ける
+                        if entity_text not in entities_by_type[entity_type]:
+                            entities_by_type[entity_type].append(entity_text)
+                
+                # 各entity typeの値を||で結合（スペースなし）
+                for entity_type in entity_type_columns:
+                    values = entities_by_type.get(entity_type, [])
+                    row[entity_type] = "||".join(values) if values else ""
             
             writer.writerow(row)
+        
+        if entities_excluded_count > 0:
+            print(f"既存メタデータのためentitiesを除外したオブジェクト数: {entities_excluded_count}")
     
     print(f"\n統合完了:")
     print(f"  入力: {input_jsonl_path}")
@@ -221,13 +355,16 @@ def integrate_jsonl(
     # 統計情報
     with_instance_id = sum(1 for obj in integrated_objects if "instanceID" in obj)
     print(f"  instanceIDが設定されたオブジェクト数: {with_instance_id}")
+    
+    # CSVに出力されたオブジェクト数（全てのオブジェクトが出力される）
+    print(f"  CSVに出力されたオブジェクト数: {len(integrated_objects)}")
 
 
 if __name__ == "__main__":
     input_path = "output_cleaned_1212_valid.jsonl"
     output_jsonl_path = "cleaned_1212_integrated.jsonl"
     output_csv_path = "cleaned_1212_integrated.csv"
-    csv_path = "oid_and_itemID.csv"
+    sparql_endpoint = "https://dydra.com/fukudakz/agmsearchendpoint/sparql"
     
-    integrate_jsonl(input_path, output_jsonl_path, output_csv_path, csv_path)
+    integrate_jsonl(input_path, output_jsonl_path, output_csv_path, sparql_endpoint)
 
