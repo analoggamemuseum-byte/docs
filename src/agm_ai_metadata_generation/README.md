@@ -185,22 +185,6 @@ python integrate_jsonl.py
 
 ---
 
-### 6. `ref/oid_and_itemID.csv`（オプション）
-**目的**: IDとinstanceIDのマッピングファイル（SPARQLエンドポイントが利用できない場合のフォールバック用）
-
-**形式**:
-```csv
-"id","instanceID"
-"A737","3405"
-"A738","3404"
-...
-```
-
-**注意**:
-- このファイルは`integrate_jsonl.py`でSPARQLエンドポイントが利用できない場合にのみ使用されます
-- ファイルが存在しない場合でも、SPARQLが利用できれば処理は続行されます
-
----
 
 ## 処理フロー
 
