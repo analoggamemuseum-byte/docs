@@ -70,7 +70,50 @@ python googledocs_ocr.py
 
 ---
 
-### 3. `fixjsonl.py`
+### 3. `prompt_for_cli.txt`
+**目的**: Gemini APIに送信するプロンプトファイル（`gemini_process.sh`で使用）
+
+**内容**:
+- OCRで抽出されたテキスト（`extracted_text`）を分析するための指示
+- テキスト整形、セクション分類、固有表現抽出の手順を定義
+- 出力JSON形式の仕様を定義
+
+**セクションタイプ**:
+- `Immersion`: ゲームの世界観、ストーリー、フレーバーテキスト
+- `Instruction`: ゲームのルール、プレイ人数、対象年齢、内容物概要など説明的な記述
+- `Credit`: 製作会社、デザイナー、著作権情報など
+- `Rights`: コピーライト表示
+- `Meta`: バーコード、型番、多言語対応表記など直接関係のない情報
+- `Catchphrase`: キャッチコピーや煽り文句
+- `Components`: 内容物リスト
+
+**エンティティタイプ**:
+- `product_name`: 製品名
+- `designer`: ゲームデザイナーの名前
+- `illustrator`: イラストレーター、アートワーク担当者の名前
+- `publisher`: 発売元、出版社の名前
+- `datePublished`: 発行年月日など公開に関わる日付
+- `barcode`: JAN, GTIN, ISBNなどのバーコードナンバー
+- `model_number`: 型番など製品を示すバーコード以外のナンバーや識別子
+- `mechanics`: ゲームメカニクス
+- `play_time`: ゲームプレイにかかる所要時間の表示
+- `number_of_players`: ゲームを遊ぶにあたって必要なプレイヤー数
+- `audience`: ゲームの対象者の指定の表示、主に年齢など
+- その他多数（詳細はファイル内を参照）
+
+**出力形式**:
+- `cleaned_text`: 整形後のテキスト全体
+- `source`: 入力JSONの`image_filename`
+- `sections`: セクション分類結果（type, text, span）
+- `entities`: 固有表現抽出結果（type, text, span, section_index）
+
+**注意**:
+- このファイルは`gemini_process.sh`の`PROMPT_FILE`変数で指定されます
+- プロンプトの内容を変更する場合は、Gemini APIの出力形式に影響を与える可能性があります
+
+---
+
+### 4. `fixjsonl.py`
 **目的**: Gemini生成のJSONLファイルを有効なJSONLファイルに変換
 
 **機能**:
@@ -91,7 +134,7 @@ python fixjsonl.py
 
 ---
 
-### 4. `integrate_jsonl.py`
+### 5. `integrate_jsonl.py`
 **目的**: JSONLファイルを統合し、JSONLとCSVの両方を出力
 
 **機能**:
@@ -142,7 +185,7 @@ python integrate_jsonl.py
 
 ---
 
-### 5. `ref/oid_and_itemID.csv`（オプション）
+### 6. `ref/oid_and_itemID.csv`（オプション）
 **目的**: IDとinstanceIDのマッピングファイル（SPARQLエンドポイントが利用できない場合のフォールバック用）
 
 **形式**:
