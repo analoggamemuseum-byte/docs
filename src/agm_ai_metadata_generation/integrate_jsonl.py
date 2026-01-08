@@ -30,11 +30,11 @@ COLUMN_NAME_MAPPING = {
     "datePublished": "ag:datePublished",
     "datePulished": "ag:datePublished",
     "date_published": "ag:datePublished",
-    "designer": "ag:designer",
+    "designer": "ag:description",
     "educational": "ag:freeword",
     "expansion_for": "ag:freeword",
     "game_type": "ag:freeword",
-    "illustrator": "ag:illustrator",
+    "illustrator": "ag:description",
     "location": "ag:freeword",
     "location_published": "ag:freeword",
     "made_in": "ag:freeword",
@@ -46,7 +46,7 @@ COLUMN_NAME_MAPPING = {
     "play_time": "ag:playTime",
     "price": "ag:price",
     "product_name": "ag:alternateName",
-    "publisher": "ag:publisher",
+    "publisher": "ag:description",
     "responsibility_statement": "ag:responsibilityStatement",
     "stage": "ag:freeword",
     "version": "ag:version",
@@ -57,6 +57,20 @@ COLUMN_NAME_MAPPING = {
 def map_column_name(column_name: str) -> str:
     """列名をマッピングに従って変換"""
     return COLUMN_NAME_MAPPING.get(column_name, column_name)
+
+
+def format_entity_value(entity_type: str, entity_text: str) -> str:
+    """entity typeに応じて値をフォーマット（プレフィックスを追加）"""
+    prefix_map = {
+        "publisher": "発行者：",
+        "illustrator": "イラストレーター：",
+        "designer": "デザイナー：",
+    }
+    
+    prefix = prefix_map.get(entity_type.lower(), "")
+    if prefix:
+        return f"{prefix}{entity_text}"
+    return entity_text
 
 
 def extract_id_from_source(source: str) -> str:
@@ -397,12 +411,14 @@ def integrate_jsonl(
             is_existing_metadata = instance_id and instance_id in existing_oids
             
             # 基本フィールド（マッピング後の列名を使用）
+            # ag:catalogingDataStatusは全ての行に確実に記録
+            cataloging_status = "" if is_existing_metadata else "収蔵品の写真を元にAIで自動生成した目録データです"
             row = {
                 "id": obj.get("id", ""),
                 map_column_name("instanceID"): instance_id,
                 map_column_name("cleaned_text"): obj.get("cleaned_text", ""),
                 map_column_name("sources"): "||".join(obj.get("sources", [])),
-                "ag:catalogingDataStatus": "" if is_existing_metadata else "収蔵品の写真を元にAIで自動生成した目録データです"
+                "ag:catalogingDataStatus": cataloging_status
             }
             
             if is_existing_metadata:
@@ -419,9 +435,11 @@ def integrate_jsonl(
                     entity_type = entity.get("type", "")
                     entity_text = entity.get("text", "").strip()
                     if entity_type and entity_text:
+                        # フォーマットされた値を取得（プレフィックス付き）
+                        formatted_text = format_entity_value(entity_type, entity_text)
                         # 重複を避ける
-                        if entity_text not in entities_by_type[entity_type]:
-                            entities_by_type[entity_type].append(entity_text)
+                        if formatted_text not in entities_by_type[entity_type]:
+                            entities_by_type[entity_type].append(formatted_text)
                 
                 # 各entity typeの値を||で結合（スペースなし、マッピング後の列名を使用）
                 for entity_type in entity_type_columns:
