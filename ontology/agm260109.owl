@@ -1,0 +1,1073 @@
+@prefix : <https://www.analoggamemuseum.org/ontology/> .
+@prefix ag: <https://www.analoggamemuseum.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@base <https://www.analoggamemuseum.org/ontology/> .
+
+<https://www.analoggamemuseum.org/ontology/> rdf:type owl:Ontology ;
+                                              <http://purl.org/dc/terms/created> "2021-06-01" ;
+                                              <http://purl.org/dc/terms/license> "CC0 1.0 Universal" ;
+                                              <http://purl.org/dc/terms/modified> "2023-02-22" ;
+                                              vann:preferredNamespacePrefix "ag" ;
+                                              rdfs:comment "アナログゲームおよびその関連資料に関する書誌世界を記述するウェブオントロジー"@ja ;
+                                              rdfs:label "Analog Game Ontology"@en ,
+                                                         "アナログゲームオントロジー"@ja ;
+                                              owl:versionInfo 0.8 .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+<http://purl.org/dc/terms/license> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+<http://purl.org/dc/terms/modified> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespacePrefix
+vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/preferredNamespaceUri
+vann:preferredNamespaceUri rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+rdf:type rdf:type owl:ObjectProperty .
+
+
+###  https://www.analoggamemuseum.org/ontology/about
+ag:about rdf:type owl:ObjectProperty ;
+         rdfs:domain ag:Work ;
+         rdfs:range ag:Subject ;
+         rdfs:comment "リソースの内容において主題もしくは主な対象とされるリソース"@ja ;
+         rdfs:label "主題"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/adaptation
+ag:adaptation rdf:type owl:ObjectProperty ;
+              rdfs:domain ag:Work ;
+              rdfs:range ag:Work ;
+              rdfs:label "翻案"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/additionalType
+ag:additionalType rdf:type owl:ObjectProperty ;
+                  rdfs:comment "リソースの種別の形式の分類"@ja ;
+                  rdfs:label "Sub Type"@en ,
+                             "サブタイプ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/agent
+ag:agent rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain ag:Contribution ;
+         rdfs:range ag:Agent ;
+         rdfs:label "エージェント"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/artist
+ag:artist rdf:type owl:ObjectProperty ;
+          rdfs:range ag:Agent ;
+          rdfs:label "アーティスト"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/award
+ag:award rdf:type owl:ObjectProperty ;
+         rdfs:range ag:Award ;
+         rdfs:label "受賞"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/character
+ag:character rdf:type owl:ObjectProperty ;
+             rdfs:range ag:Character ;
+             rdfs:label "キャラクター"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/coDesigner
+ag:coDesigner rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf ag:designer ;
+              rdfs:range ag:Agent ;
+              rdfs:label "サブデザイナー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/contentLocation
+ag:contentLocation rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain ag:Work ;
+                   rdfs:range ag:Place ;
+                   rdfs:label "設定（場所）"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/contentTimeSpan
+ag:contentTimeSpan rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain ag:Work ;
+                   rdfs:range ag:Timespan ;
+                   rdfs:label "設定（時期）"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/contribution
+ag:contribution rdf:type owl:ObjectProperty ;
+                rdfs:range ag:Contribution ;
+                rdfs:label "貢献"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/creator
+ag:creator rdf:type owl:ObjectProperty ;
+           rdfs:range ag:Agent ;
+           rdfs:label "作成者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/designer
+ag:designer rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:range ag:Agent ;
+            rdfs:label "デザイナー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/director
+ag:director rdf:type owl:ObjectProperty ;
+            rdfs:range ag:Agent ;
+            rdfs:label "ディレクター"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/distributor
+ag:distributor rdf:type owl:ObjectProperty ;
+               rdfs:domain ag:Instance ;
+               rdfs:range ag:Agent ;
+               rdfs:comment "Distributor"@en ,
+                            "発行者の許諾を得てリソースを頒布・販売する行為主体"@ja ;
+               rdfs:label "販売者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/donor
+ag:donor rdf:type owl:ObjectProperty ;
+         rdfs:label "寄贈者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/editor
+ag:editor rdf:type owl:ObjectProperty ;
+          rdfs:range ag:Agent ;
+          rdfs:label "エディター"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/embodiment
+ag:embodiment rdf:type owl:ObjectProperty ;
+              rdfs:domain ag:Work ;
+              rdfs:range ag:Instance ;
+              rdfs:label "Embodiment"@en ,
+                         "具体化するインスタンス"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/embodimentOf
+ag:embodimentOf rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain ag:Instance ;
+                rdfs:range ag:Work ;
+                rdfs:label "Embodiment of"@en ,
+                           "具体化される作品"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/exemplar
+ag:exemplar rdf:type owl:ObjectProperty ;
+            owl:inverseOf ag:exemplarOf ;
+            rdfs:domain ag:Instance ;
+            rdfs:range ag:Item ;
+            rdfs:label "例示体である個別資料"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/exemplarOf
+ag:exemplarOf rdf:type owl:ObjectProperty ;
+              rdfs:domain ag:Item ;
+              rdfs:range ag:Instance ;
+              rdfs:label "例示するインスタンス"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/exhibitedTo
+ag:exhibitedTo rdf:type owl:ObjectProperty ;
+               rdfs:range ag:Event ;
+               rdfs:label "展示"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/expantionOf
+ag:expantionOf rdf:type owl:ObjectProperty ;
+               rdfs:label "拡張"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/franchise
+ag:franchise rdf:type owl:ObjectProperty ;
+             rdfs:domain ag:Work ;
+             rdfs:range ag:Franchise ;
+             rdfs:label "フランチャイズ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/gamePlayGenre
+ag:gamePlayGenre rdf:type owl:ObjectProperty ;
+                 rdfs:domain ag:Work ;
+                 rdfs:range ag:GamePlayGenre ;
+                 rdfs:label "ゲームプレイジャンル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/gameType
+ag:gameType rdf:type owl:ObjectProperty ;
+            rdfs:range ag:AnalogGameType ;
+            rdfs:comment "ゲームであるリソースの形式的側面における種別の指定（e.g. ボードゲーム, テーブルトークRPG, カードゲーム）"@ja ;
+            rdfs:label "ゲームタイプ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/graphicDesigner
+ag:graphicDesigner rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf ag:artist ;
+                   rdfs:range ag:Agent ;
+                   rdfs:label "グラフィックデザイナー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/hasPart
+ag:hasPart rdf:type owl:ObjectProperty ;
+           owl:inverseOf ag:isPartOf ;
+           rdfs:label "部分"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/hasWorkVariation
+ag:hasWorkVariation rdf:type owl:ObjectProperty ;
+                    rdfs:label "実現される作品バリエーション"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/holdingAgent
+ag:holdingAgent rdf:type owl:ObjectProperty ;
+                rdfs:domain ag:Item ;
+                rdfs:range ag:Agent ;
+                rdfs:label "保管者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/illustrator
+ag:illustrator rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf ag:artist ;
+               rdfs:range ag:Agent ;
+               rdfs:label "イラストレーター"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/isPartOf
+ag:isPartOf rdf:type owl:ObjectProperty ;
+            rdfs:label "全体"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/isWorkVariationOf
+ag:isWorkVariationOf rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:label "実現する作品"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/locationCreated
+ag:locationCreated rdf:type owl:ObjectProperty ;
+                   rdfs:domain ag:Work ;
+                   rdfs:range ag:Place ;
+                   rdfs:label "作成地"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/mainDesigner
+ag:mainDesigner rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf ag:designer ;
+                rdfs:range ag:Agent ;
+                rdfs:label "メインデザイナー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/material
+ag:material rdf:type owl:ObjectProperty ;
+            rdfs:domain ag:Instance ;
+            rdfs:range ag:Material ;
+            rdfs:label "素材"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/mechanic
+ag:mechanic rdf:type owl:ObjectProperty ;
+            rdfs:domain ag:Work ;
+            rdfs:range ag:Mechanic ;
+            rdfs:label "メカニック"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/motif
+ag:motif rdf:type owl:ObjectProperty ;
+         rdfs:domain ag:Work ;
+         rdfs:range ag:Motif ;
+         rdfs:label "モチーフ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/narrativeGenre
+ag:narrativeGenre rdf:type owl:ObjectProperty ;
+                  rdfs:domain ag:Work ;
+                  rdfs:range ag:Narrative_Genre ;
+                  rdfs:label "物語ジャンル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/producer
+ag:producer rdf:type owl:ObjectProperty ;
+            rdfs:range ag:Agent ;
+            rdfs:label "プロデューサー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/publisher
+ag:publisher rdf:type owl:ObjectProperty ;
+             rdfs:domain ag:Instance ;
+             rdfs:range ag:Agent ;
+             rdfs:comment "リソースの公開に責任と権利を有する行為主体"@ja ;
+             rdfs:label "Publisher"@en ,
+                        "発行者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/remadeAs
+ag:remadeAs rdf:type owl:ObjectProperty ;
+            rdfs:domain ag:Work ;
+            rdfs:range ag:Work ;
+            rdfs:label "リメイク"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/requires
+ag:requires rdf:type owl:ObjectProperty ;
+            rdfs:label "要件"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/role
+ag:role rdf:type owl:ObjectProperty ;
+        rdfs:domain ag:Contribution ;
+        rdfs:range ag:Role ;
+        rdfs:label "役割"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/sculptor
+ag:sculptor rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf ag:artist ;
+            rdfs:range ag:Agent ;
+            rdfs:label "彫刻師"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/series
+ag:series rdf:type owl:ObjectProperty ;
+          rdfs:range ag:Series ;
+          rdfs:label "シリーズ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/supervisor
+ag:supervisor rdf:type owl:ObjectProperty ;
+              rdfs:range ag:Agent ;
+              rdfs:label "監修"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/testPlayer
+ag:testPlayer rdf:type owl:ObjectProperty ;
+              rdfs:range ag:Agent ;
+              rdfs:label "テストプレイヤー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/translator
+ag:translator rdf:type owl:ObjectProperty ;
+              rdfs:range ag:Agent ;
+              rdfs:label "翻訳者"@ja .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://www.analoggamemuseum.org/ontology/abstract
+ag:abstract rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf ag:description ;
+            rdfs:comment "リソースの内容の要約。"@ja ;
+            rdfs:label "Abstract"@en ,
+                       "要約"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/alternateName
+ag:alternateName rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "本タイトルと別に用いられるタイトルや名称"@ja ;
+                 rdfs:label "Alternate Name"@en ,
+                            "別タイトル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/audience
+ag:audience rdf:type owl:DatatypeProperty ;
+            rdfs:comment "リソースが想定する利用者の年齢の範囲を記録する（e.g. 3–）。範囲を示す記号はENDASH（–）である。"@ja ;
+            rdfs:label "Audience"@en ,
+                       "対象者"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/barcode
+ag:barcode rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf ag:identifier ;
+           rdfs:label "バーコード"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/bgg
+ag:bgg rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf ag:identifier ;
+       rdfs:label "ボードゲームギーク"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/bodoge
+ag:bodoge rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf ag:identifier ;
+          rdfs:label "ボドゲーマ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/component
+ag:component rdf:type owl:DatatypeProperty ;
+             rdfs:domain ag:Instance ;
+             rdfs:comment """リソースを物理的に構成する物品及びその数量。
+e.g. ホワイトボード 7枚 / 曜日カード 16枚"""@ja ;
+             rdfs:label "Component"@en ,
+                        "コンポーネント"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/contactPoint
+ag:contactPoint rdf:type owl:DatatypeProperty ;
+                rdfs:comment "責任を持つ行為主体への連絡に関わる電話番号やeメールアドレス"@ja ;
+                rdfs:label "Contact Point"@en ,
+                           "コンタクト情報"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/copyrightYear
+ag:copyrightYear rdf:type owl:DatatypeProperty ;
+                 rdfs:comment "著作権に関連する日付。とりわけ著作権表示の年。著作権表示から取得する場合、著作権記号と合わせて記録する（e.g. ©2001）。"@ja ;
+                 rdfs:label "Copyright Year"@en ,
+                            "著作権年"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/dateCreated
+ag:dateCreated rdf:type owl:DatatypeProperty ;
+               rdfs:domain ag:Work ;
+               rdfs:comment "リソースが作成された日付。"@ja ;
+               rdfs:label "Date Created"@en ,
+                          "作成日"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/dateModified
+ag:dateModified rdf:type owl:DatatypeProperty ;
+                rdfs:comment "リソースが修正された日付。"@ja ;
+                rdfs:label "Date Modified"@en ,
+                           "修正日"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/datePublished
+ag:datePublished rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ag:Instance ;
+                 rdfs:comment "リソースが公開された日付。ISO8601形式で記録する（e.g. 2021-06-09）。"@ja ;
+                 rdfs:label "Date Published"@en ,
+                            "公開日"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/description
+ag:description rdf:type owl:DatatypeProperty ;
+               rdfs:comment "リソースに関する説明"@ja ;
+               rdfs:label "Description"@en ,
+                          "説明"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/dimension
+ag:dimension rdf:type owl:DatatypeProperty ;
+             rdfs:domain ag:Instance ;
+             rdfs:comment "リソースの物理的な大きさ。"@ja ;
+             rdfs:label "Dimension"@en ,
+                        "大きさ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/doi
+ag:doi rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf ag:identifier .
+
+
+###  https://www.analoggamemuseum.org/ontology/extent
+ag:extent rdf:type owl:DatatypeProperty ;
+          rdfs:domain ag:Instance ;
+          rdfs:comment "リソースの数量。"@ja ;
+          rdfs:label "Extent"@en ,
+                     "数量"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/format
+ag:format rdf:type owl:DatatypeProperty ;
+          rdfs:domain ag:Instance ;
+          rdfs:comment "リソースのメディア形式。"@ja ;
+          rdfs:label "Format"@en ,
+                     "形式"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/gtin
+ag:gtin rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ag:identifier .
+
+
+###  https://www.analoggamemuseum.org/ontology/identifier
+ag:identifier rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:comment "リソースを示す識別子。"@ja ;
+              rdfs:label "Identifier"@en ,
+                         "識別子"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/image
+ag:image rdf:type owl:DatatypeProperty ;
+         rdfs:range xsd:anyURI ;
+         rdfs:comment "リソースを示す画像"@ja ;
+         rdfs:label "Image"@en ,
+                    "画像"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/isbn
+ag:isbn rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ag:identifier .
+
+
+###  https://www.analoggamemuseum.org/ontology/issn
+ag:issn rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ag:identifier .
+
+
+###  https://www.analoggamemuseum.org/ontology/issueNumber
+ag:issueNumber rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain ag:Instance ;
+               rdfs:range xsd:integer ;
+               rdfs:label "Issue Number"@en ,
+                          "号次"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/itemCondition
+ag:itemCondition rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ag:Item ;
+                 rdfs:comment "個別資料であるリソースの特有の状態。カバー無し、コンポーネントの欠如など。"@ja ;
+                 rdfs:label "Item Condition"@en ,
+                            "状態"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/label
+ag:label rdf:type owl:DatatypeProperty ;
+         rdfs:comment "人間可読ラベル。"@ja ;
+         rdfs:label "Label"@en ,
+                    "ラベル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/language
+ag:language rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:language ;
+            rdfs:comment "リソースの言語。入力に際しては、どの言語話者を対象とするかを判断基準とする（英単語が含まれていても日本語話者が対象のリソースであれば「jpn」を記録する）。"@ja ;
+            rdfs:label "Language"@en ,
+                       "言語"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/manualExtent
+ag:manualExtent rdf:type owl:DatatypeProperty ;
+                rdfs:comment "マニュアルの数量（e.g. 1枚 / 18ページ）。冊子体1冊の場合はページ数を複数札の場合は冊数を記録する。"@ja ;
+                rdfs:label "マニュアル数量"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/manualFormat
+ag:manualFormat rdf:type owl:DatatypeProperty ;
+                rdfs:domain ag:Instance ;
+                rdfs:comment "マニュアルのメディア形式。統制語彙から選択し記録する。"@ja ;
+                rdfs:label "Manual Format"@en ,
+                           "マニュアル形式"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/manualName
+ag:manualName rdf:type owl:DatatypeProperty ;
+              rdfs:domain ag:Instance ;
+              rdfs:comment "Manual Name"@ja ,
+                           "マニュアルのタイトルや名称。"@ja ;
+              rdfs:label "マニュアルタイトル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/manualUrl
+ag:manualUrl rdf:type owl:DatatypeProperty ;
+             rdfs:domain ag:Instance ;
+             rdfs:range xsd:anyURI ;
+             rdfs:comment "オンラインリソースであるマニュアルのURL"@ja ;
+             rdfs:label "Manual URL"@en ,
+                        "マニュアルURL"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/modelNumber
+ag:modelNumber rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf ag:identifier ;
+               rdfs:label "型番"@ja .
+
+###  https://www.analoggamemuseum.org/ontology/catalogingDataStatus
+ag:catalogingDataStatus rdf:type owl:DatatypeProperty ;
+        rdfs:comment "AIが作成したのか人間が作成したのかなど目録データの状況を示す"@ja ;
+        rdfs:label "Cataloging Data Status"@en ,
+                   "目録データステータス"@ja .
+
+###  https://www.analoggamemuseum.org/ontology/packageText
+ag:packageText rdf:type owl:DatatypeProperty ;
+        rdfs:comment "パッケージ画像から抽出したテキスト全文"@ja ;
+        rdfs:label "Package Text"@en ,
+                   "パッケージテキスト"@ja .
+
+###  https://www.analoggamemuseum.org/ontology/name
+ag:name rdf:type owl:DatatypeProperty ;
+        rdfs:comment "リソースの本タイトル"@ja ;
+        rdfs:label "Name"@en ,
+                   "タイトル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/numberOfPlayers
+ag:numberOfPlayers rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "ルールにより規定されるプレイヤーの人数の指定。整数または、その範囲をENDASHを用いて表現し記録する（e.g. 2–10 / 4）。"@ja ;
+                   rdfs:label "Number of Players"@en ,
+                              "プレイヤ数"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/playTime
+ag:playTime rdf:type owl:DatatypeProperty ;
+            rdfs:comment "プレイを開始しそれが終了するまでに必要とされる時間の平均や目安。ISO8601 Durationで記録する（PnYnMnDTnHnMnS; e.g. PT15M, PT1H30M）。最小と最大が示される場合は、それらをENDASHでつなぐ（e.g. PT15M–PT20M）。"@ja ;
+            rdfs:label "Play Time"@en ,
+                       "プレイ時間"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/price
+ag:price rdf:type owl:DatatypeProperty ;
+         rdfs:domain ag:Instance ;
+         rdfs:label "Price"@en ,
+                    "価格"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/provenance
+ag:provenance rdf:type owl:DatatypeProperty ;
+              rdfs:label "Provenance"@en ,
+                         "由来"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/responsibilityStatement
+ag:responsibilityStatement rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ag:Instance ;
+                           rdfs:comment "リソースの責任に関わる表示"@ja ;
+                           rdfs:label "Credit"@en ,
+                                      "クレジット"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/roleName
+ag:roleName rdf:type owl:DatatypeProperty ;
+            rdfs:domain ag:Contribution ;
+            rdfs:label "Role Name"@en ,
+                       "役割名"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/seeAlso
+ag:seeAlso rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:anyURI ;
+           rdfs:comment "リソースに関連性の高いリソースのURL"@ja ;
+           rdfs:label "See Also"@en ,
+                      "をも見よ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/seriesStatement
+ag:seriesStatement rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ag:Instance ;
+                   rdfs:comment "リソースが所属するシリーズに関する表示。作品シリーズの記録には用いない。"@ja ;
+                   rdfs:label "Series Statement"@en ,
+                              "シリーズ表示"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/shelfNumber
+ag:shelfNumber rdf:type owl:DatatypeProperty ;
+               rdfs:domain ag:Item ;
+               rdfs:label "Shelf Number"@en ,
+                          "書架番号"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/source
+ag:source rdf:type owl:DatatypeProperty ;
+          rdfs:label "Source"@en ,
+                     "情報源"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/subtitle
+ag:subtitle rdf:type owl:DatatypeProperty ;
+            rdfs:comment "全体の作品名と別で個別に本リソースを指定するタイトル。作品の一部のリソースであり場合用いる。"@ja ;
+            rdfs:label "Subtitle"@en ,
+                       "サブタイトル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/systemRequirement
+ag:systemRequirement rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ag:Instance ;
+                     rdfs:comment "リソースのアクセスに関わるシステム要件や必要とされる装置"@ja ;
+                     rdfs:label "System Requirements"@en ,
+                                "システム要件"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/tableOfContents
+ag:tableOfContents rdf:type owl:DatatypeProperty ;
+                   rdfs:comment "リソースの内容を構成するサブユニットのリスト"@ja ;
+                   rdfs:label "Table of Contents"@en ,
+                              "目次"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/thumb
+ag:thumb rdf:type owl:DatatypeProperty ;
+         rdfs:range xsd:anyURI ;
+         rdfs:comment "リソースを示すサムネイル画像"@ja ;
+         rdfs:label "Thumbnail"@en ,
+                    "サムネイル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/url
+ag:url rdf:type owl:DatatypeProperty ;
+       rdfs:range xsd:anyURI ;
+       rdfs:comment "URL"@ja ,
+                    "オンラインリソースであるリソースのURL"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/version
+ag:version rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:comment "版またはエディション"@ja ;
+           rdfs:label "Version"@en ,
+                      "バージョン"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/volume
+ag:volume rdf:type owl:DatatypeProperty ;
+          rdfs:domain ag:Instance ;
+          rdfs:comment "巻次や号次もしくは部編番号の表示"@ja ;
+          rdfs:label "Volume"@en ,
+                     "部編"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/volumeNumber
+ag:volumeNumber rdf:type owl:DatatypeProperty ;
+                rdfs:domain ag:Instance ;
+                rdfs:range xsd:integer ;
+                rdfs:label "Volume Number"@en ,
+                           "巻次"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/weight
+ag:weight rdf:type owl:DatatypeProperty ;
+          rdfs:domain ag:Instance ;
+          rdfs:comment "リソースの重さ"@ja ;
+          rdfs:label "Weight"@en ,
+                     "重さ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/wikidata
+ag:wikidata rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf ag:identifier .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://www.analoggamemuseum.org/ontology/AdminMetadata
+ag:AdminMetadata rdf:type owl:Class ;
+                 rdfs:comment "メタデータをリソースとする管理情報"@ja ;
+                 rdfs:label "Admin Metadata"@en ,
+                            "管理メタデータ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Agent
+ag:Agent rdf:type owl:Class ;
+         rdfs:comment "リソースの頒布や制作に責任を有する個人や団体"@ja ;
+         rdfs:label "Agent"@en ,
+                    "行為主体"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/AnalogGameType
+ag:AnalogGameType rdf:type owl:Class ;
+                  rdfs:subClassOf ag:ControlledVocabulary ;
+                  rdfs:label "テーブルトップゲームタイプ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Article
+ag:Article rdf:type owl:Class ;
+           rdfs:subClassOf ag:Instance ;
+           rdfs:label "Article"@en ,
+                      "記事"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/AudioMaterial
+ag:AudioMaterial rdf:type owl:Class ;
+                 rdfs:subClassOf ag:Instance ;
+                 rdfs:label "Audio Material"@en ,
+                            "音声資料"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Award
+ag:Award rdf:type owl:Class ;
+         rdfs:subClassOf ag:Topic ;
+         rdfs:label "受賞"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Book
+ag:Book rdf:type owl:Class ;
+        rdfs:subClassOf ag:Volume ;
+        rdfs:label "Book"@en ,
+                   "図書"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Card
+ag:Card rdf:type owl:Class ;
+        rdfs:subClassOf ag:Instance ;
+        rdfs:label "Card"@en ,
+                   "カード"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Character
+ag:Character rdf:type owl:Class ;
+             rdfs:subClassOf ag:Topic ;
+             rdfs:label "キャラクター"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Collection
+ag:Collection rdf:type owl:Class ;
+              rdfs:comment "ある文脈で関連付けられるリソースの集合"@ja ;
+              rdfs:label "コレクション"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Contribution
+ag:Contribution rdf:type owl:Class ;
+                rdfs:comment "創作への貢献。その役割と行為主体を記録する。"@ja ;
+                rdfs:label "Contribution"@en ,
+                           "貢献"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/ControlledVocabulary
+ag:ControlledVocabulary rdf:type owl:Class ;
+                        rdfs:comment "その他のリソースを記述するための用語や概念のリスト。統制語彙。"@ja ;
+                        rdfs:label "Controlled Vocabulary"@en ,
+                                   "統制語彙"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Event
+ag:Event rdf:type owl:Class ;
+         rdfs:subClassOf ag:Topic ;
+         rdfs:label "イベント"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/FictionalPlace
+ag:FictionalPlace rdf:type owl:Class ;
+                  rdfs:subClassOf ag:Place ;
+                  rdfs:label "虚構の場所"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/FictionalTimespan
+ag:FictionalTimespan rdf:type owl:Class ;
+                     rdfs:subClassOf ag:Timespan ;
+                     rdfs:label "虚構の時期"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Flyer
+ag:Flyer rdf:type owl:Class ;
+         rdfs:subClassOf ag:Instance ;
+         rdfs:label "Flyer"@en ,
+                    "フライヤー"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Franchise
+ag:Franchise rdf:type owl:Class ;
+             rdfs:subClassOf ag:Topic ;
+             rdfs:label "フランチャイズ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/GameComponent
+ag:GameComponent rdf:type owl:Class ;
+                 rdfs:subClassOf ag:Instance ;
+                 rdfs:label "Game Component"@en ,
+                            "ゲームコンポーネント"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/GamePlatform
+ag:GamePlatform rdf:type owl:Class ;
+                rdfs:subClassOf ag:ControlledVocabulary ;
+                rdfs:label "ゲームプラットフォーム"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/GamePlayGenre
+ag:GamePlayGenre rdf:type owl:Class ;
+                 rdfs:subClassOf ag:ControlledVocabulary ;
+                 rdfs:label "ゲームプレイジャンル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Instance
+ag:Instance rdf:type owl:Class ;
+            owl:disjointWith ag:Item ;
+            rdfs:comment "作品を個別的かつ物質的もしくは電子的に具体化するリソース" ;
+            rdfs:label "Instance"@en ,
+                       "インスタンス"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Item
+ag:Item rdf:type owl:Class ;
+        rdfs:comment "パッケージを例示する個別の物品"@ja ;
+        rdfs:label "Item"@en ,
+                   "個別資料"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Journal
+ag:Journal rdf:type owl:Class ;
+           rdfs:subClassOf ag:Periodical ;
+           rdfs:label "Journal"@en ,
+                      "ジャーナル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Magazine
+ag:Magazine rdf:type owl:Class ;
+            rdfs:subClassOf ag:Periodical ;
+            rdfs:label "Magazine"@en ,
+                       "雑誌"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Material
+ag:Material rdf:type owl:Class ;
+            rdfs:subClassOf ag:ControlledVocabulary ;
+            rdfs:label "素材"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Mechanic
+ag:Mechanic rdf:type owl:Class ;
+            rdfs:subClassOf ag:ControlledVocabulary ;
+            rdfs:label "メカニック"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/MediaType
+ag:MediaType rdf:type owl:Class ;
+             rdfs:subClassOf ag:ControlledVocabulary ;
+             rdfs:label "Media Type"@en ,
+                        "メディア種別"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Motif
+ag:Motif rdf:type owl:Class ;
+         rdfs:subClassOf ag:Topic ;
+         rdfs:label "モチーフ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Narrative_Genre
+ag:Narrative_Genre rdf:type owl:Class ;
+                   rdfs:subClassOf ag:ControlledVocabulary ;
+                   rdfs:label "物語ジャンル"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Organization
+ag:Organization rdf:type owl:Class ;
+                rdfs:subClassOf ag:Agent ;
+                rdfs:comment "複数の個人が所属し名前を持ち行為の単位である組織などの集合"@ja ;
+                rdfs:label "Organization"@en ,
+                           "団体"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Pamphlet
+ag:Pamphlet rdf:type owl:Class ;
+            rdfs:subClassOf ag:Instance ;
+            rdfs:label "Pamphlet"@en ,
+                       "パンフレット"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Periodical
+ag:Periodical rdf:type owl:Class ;
+              rdfs:subClassOf ag:Volume ;
+              rdfs:label "Periodical"@en ,
+                         "逐次刊行物"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Person
+ag:Person rdf:type owl:Class ;
+          rdfs:subClassOf ag:Agent ;
+          rdfs:comment "人間"@ja ;
+          rdfs:label "Person"@en ,
+                     "個人"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Place
+ag:Place rdf:type owl:Class ;
+         rdfs:subClassOf ag:Topic ;
+         rdfs:label "場所"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Role
+ag:Role rdf:type owl:Class ;
+        rdfs:subClassOf ag:ControlledVocabulary ;
+        rdfs:label "役割"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Series
+ag:Series rdf:type owl:Class ;
+          rdfs:subClassOf ag:Topic ;
+          rdfs:label "シリーズ"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Subject
+ag:Subject rdf:type owl:Class ;
+           rdfs:subClassOf ag:Topic ;
+           rdfs:label "主題"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/TableTopGame
+ag:TableTopGame rdf:type owl:Class ;
+                rdfs:subClassOf ag:Instance ;
+                rdfs:label "Tabletop Game"@en ,
+                           "テーブルトップゲーム"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Timespan
+ag:Timespan rdf:type owl:Class ;
+            rdfs:subClassOf ag:Topic ;
+            rdfs:label "時期"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Topic
+ag:Topic rdf:type owl:Class ;
+         rdfs:comment "その他の実体のリソースを記述するための概念や事物"@ja ;
+         rdfs:label "トピック"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/VideoGame
+ag:VideoGame rdf:type owl:Class ;
+             rdfs:subClassOf ag:Instance ;
+             rdfs:label "Video Game"@en ,
+                        "ビデオゲーム"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/VisualAudioMaterial
+ag:VisualAudioMaterial rdf:type owl:Class ;
+                       rdfs:subClassOf ag:Instance ;
+                       rdfs:label "Audio Visual Material"@en ,
+                                  "視聴覚資料"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Volume
+ag:Volume rdf:type owl:Class ;
+          rdfs:subClassOf ag:Instance ;
+          rdfs:label "Volume"@en ,
+                     "冊子"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/Work
+ag:Work rdf:type owl:Class ;
+        rdfs:comment "目録されるリソースのユーザによって識別可能な創作的な内容を反映したリソース"@ja ;
+        rdfs:label "Work"@en ,
+                   "作品"@ja .
+
+
+###  https://www.analoggamemuseum.org/ontology/WorkVariation
+ag:WorkVariation rdf:type owl:Class ;
+                 rdfs:subClassOf ag:Work ;
+                 rdfs:label "作品バリエーション"@ja .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
