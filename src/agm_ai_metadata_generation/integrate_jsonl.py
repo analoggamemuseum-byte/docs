@@ -395,11 +395,19 @@ def integrate_jsonl(
     # 統合されたオブジェクトをCSVとして保存（区切り文字: ,、多値結合: ||）
     with open(output_csv_path, "w", encoding="utf-8", newline="") as f:
         # 基本フィールド + entity type列 + ag:catalogingDataStatus（最後の列）
-        # 列名をマッピングに従って変換
+        # 列名をマッピングに従って変換し、重複を除去
         base_fieldnames = ["id", "instanceID", "cleaned_text", "sources"]
         mapped_base_fieldnames = [map_column_name(fn) if fn != "id" else fn for fn in base_fieldnames]
-        mapped_entity_columns = [map_column_name(et) for et in entity_type_columns]
-        fieldnames = mapped_base_fieldnames + mapped_entity_columns + ["ag:catalogingDataStatus"]
+        # マッピング後の列名を取得し、重複を除去して順序を保持
+        mapped_entity_columns = []
+        seen_mapped_columns = set()
+        for et in entity_type_columns:
+            mapped_col = map_column_name(et)
+            if mapped_col not in seen_mapped_columns:
+                mapped_entity_columns.append(mapped_col)
+                seen_mapped_columns.add(mapped_col)
+        # 一番左にdummy列とrdf:type列を追加
+        fieldnames = ["dummy", "rdf:type"] + mapped_base_fieldnames + mapped_entity_columns + ["ag:catalogingDataStatus"]
         
         writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
@@ -414,6 +422,8 @@ def integrate_jsonl(
             # ag:catalogingDataStatusは全ての行に確実に記録
             cataloging_status = "" if is_existing_metadata else "収蔵品の写真を元にAIで自動生成した目録データです"
             row = {
+                "dummy": "",  # dummy列は空
+                "rdf:type": "ag:TableTopGame",  # rdf:type列はすべて"ag:TableTopGame"
                 "id": obj.get("id", ""),
                 map_column_name("instanceID"): instance_id,
                 map_column_name("cleaned_text"): obj.get("cleaned_text", ""),
@@ -425,26 +435,39 @@ def integrate_jsonl(
                 entities_excluded_count += 1
                 print(f"entities除外: instanceID={instance_id} は既存メタデータのためentitiesを除外（cleaned_textは追加）")
                 # entitiesの列は全て空にする（マッピング後の列名を使用）
-                for entity_type in entity_type_columns:
-                    mapped_column = map_column_name(entity_type)
+                for mapped_column in mapped_entity_columns:
                     row[mapped_column] = ""
             else:
-                # entitiesをtypeごとにグループ化
-                entities_by_type: Dict[str, List[str]] = defaultdict(list)
+                # entitiesをマッピング後の列名ごとにグループ化（同じ列にマッピングされる複数のentity typeを統合）
+                # 同じ属性の同じ値の重複を避けるため、Setを使用
+                entities_by_mapped_column: Dict[str, Set[str]] = defaultdict(set)
+                
+                # 元の値の重複チェック用（プレフィックス追加前の値も追跡）
+                original_values_by_mapped_column: Dict[str, Set[str]] = defaultdict(set)
+                
                 for entity in obj.get("entities", []):
                     entity_type = entity.get("type", "")
                     entity_text = entity.get("text", "").strip()
                     if entity_type and entity_text:
-                        # フォーマットされた値を取得（プレフィックス付き）
-                        formatted_text = format_entity_value(entity_type, entity_text)
-                        # 重複を避ける
-                        if formatted_text not in entities_by_type[entity_type]:
-                            entities_by_type[entity_type].append(formatted_text)
+                        # マッピング後の列名を取得
+                        mapped_column = map_column_name(entity_type)
+                        
+                        # 元の値の重複チェック（プレフィックス追加前）
+                        # 同じ列に既に同じ元の値がある場合はスキップ
+                        if entity_text not in original_values_by_mapped_column[mapped_column]:
+                            original_values_by_mapped_column[mapped_column].add(entity_text)
+                            
+                            # フォーマットされた値を取得（プレフィックス付き）
+                            formatted_text = format_entity_value(entity_type, entity_text)
+                            
+                            # フォーマット後の値も重複チェック
+                            if formatted_text not in entities_by_mapped_column[mapped_column]:
+                                entities_by_mapped_column[mapped_column].add(formatted_text)
                 
-                # 各entity typeの値を||で結合（スペースなし、マッピング後の列名を使用）
-                for entity_type in entity_type_columns:
-                    mapped_column = map_column_name(entity_type)
-                    values = entities_by_type.get(entity_type, [])
+                # 各マッピング後の列の値を設定（重複を除去済み）
+                # ソートして順序を固定
+                for mapped_column in mapped_entity_columns:
+                    values = sorted(entities_by_mapped_column.get(mapped_column, set()))
                     row[mapped_column] = "||".join(values) if values else ""
             
             writer.writerow(row)
