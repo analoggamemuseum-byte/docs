@@ -1,0 +1,443 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <https://www.analoggamemuseum.org/ontology/> .
+@prefix ns2: <http://omeka.org/s/vocabs/o#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://id.analoggamemuseum.org/api/items/2827> ns2:modified "2026-01-08T18:24:23+00:00"^^xsd:dateTime ;
+    ns2:title "A529" ;
+    dcterms:title "A529" ;
+    ns1:identifier "A529" .
+
+<https://id.analoggamemuseum.org/api/items/2847> ns2:modified "2026-01-08T18:24:23+00:00"^^xsd:dateTime ;
+    ns2:title "A570" ;
+    dcterms:title "A570" ;
+    ns1:identifier "A570" .
+
+<https://id.analoggamemuseum.org/api/items/3115> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A533" ;
+    dcterms:title "A533" ;
+    ns1:identifier "A533" .
+
+<https://id.analoggamemuseum.org/api/items/3128> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A565" ;
+    dcterms:title "A565" ;
+    ns1:identifier "A565" .
+
+<https://id.analoggamemuseum.org/api/items/3150> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A592" ;
+    dcterms:title "A592" ;
+    ns1:identifier "A592" .
+
+<https://id.analoggamemuseum.org/api/items/3180> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A654" ;
+    dcterms:title "A654" ;
+    ns1:identifier "A654" .
+
+<https://id.analoggamemuseum.org/api/items/3182> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A653" ;
+    dcterms:title "A653" ;
+    ns1:identifier "A653" .
+
+<https://id.analoggamemuseum.org/api/items/3184> ns2:modified "2026-01-08T18:24:24+00:00"^^xsd:dateTime ;
+    ns2:title "A652" ;
+    dcterms:title "A652" ;
+    ns1:identifier "A652" .
+
+<https://id.analoggamemuseum.org/api/items/4129> ns2:modified "2026-01-08T18:24:27+00:00"^^xsd:dateTime ;
+    ns2:title "A819" ;
+    dcterms:title "A819" ;
+    ns1:identifier "A819" .
+
+<https://id.analoggamemuseum.org/api/items/4155> ns2:modified "2026-01-08T18:24:27+00:00"^^xsd:dateTime ;
+    ns2:title "A769" ;
+    dcterms:title "A769" ;
+    ns1:identifier "A769" .
+
+<https://id.analoggamemuseum.org/api/items/5692> ns2:modified "2026-01-08T18:24:31+00:00"^^xsd:dateTime ;
+    ns2:title "A900" ;
+    dcterms:title "A900" ;
+    ns1:identifier "A900" .
+
+<https://id.analoggamemuseum.org/api/items/5708> ns2:modified "2026-01-08T18:24:31+00:00"^^xsd:dateTime ;
+    ns2:title "A958" ;
+    dcterms:title "A958" ;
+    ns1:identifier "A958" .
+
+<https://id.analoggamemuseum.org/api/items/6308> ns2:modified "2026-01-08T18:24:34+00:00"^^xsd:dateTime ;
+    ns2:title "NEW TYPE" ;
+    dcterms:title "NEW TYPE" .
+
+<https://id.analoggamemuseum.org/api/items/7637> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1192" ;
+    dcterms:title "A1192" ;
+    ns1:identifier "A1192" .
+
+<https://id.analoggamemuseum.org/api/items/7638> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1191" ;
+    dcterms:title "A1191" ;
+    ns1:identifier "A1191" .
+
+<https://id.analoggamemuseum.org/api/items/7683> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1199" ;
+    dcterms:title "A1199" ;
+    ns1:identifier "A1199" .
+
+<https://id.analoggamemuseum.org/api/items/7706> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1207" ;
+    dcterms:title "A1207" ;
+    ns1:identifier "A1207" .
+
+<https://id.analoggamemuseum.org/api/items/7726> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1209" ;
+    dcterms:title "A1209" ;
+    ns1:identifier "A1209" .
+
+<https://id.analoggamemuseum.org/api/items/7727> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1212" ;
+    dcterms:title "A1212" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6371> ;
+    ns1:identifier "A1212" .
+
+<https://id.analoggamemuseum.org/api/items/7728> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1215" ;
+    dcterms:title "A1215" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6372> ;
+    ns1:identifier "A1215" .
+
+<https://id.analoggamemuseum.org/api/items/7729> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1213" ;
+    dcterms:title "A1213" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6373> ;
+    ns1:identifier "A1213" ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2022春）" .
+
+<https://id.analoggamemuseum.org/api/items/7730> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6374> .
+
+<https://id.analoggamemuseum.org/api/items/7799> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1216" ;
+    dcterms:title "A1216" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6420> ;
+    ns1:identifier "A1216" .
+
+<https://id.analoggamemuseum.org/api/items/7800> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1217" ;
+    dcterms:title "A1217" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6421> ;
+    ns1:identifier "A1217" .
+
+<https://id.analoggamemuseum.org/api/items/7801> ns2:modified "2026-01-08T18:24:38+00:00"^^xsd:dateTime ;
+    ns2:title "A1218" ;
+    dcterms:title "A1218" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6422> ;
+    ns1:identifier "A1218" .
+
+<https://id.analoggamemuseum.org/api/items/7964> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1219" ;
+    dcterms:title "A1219" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6579> ;
+    ns1:identifier "A1219" .
+
+<https://id.analoggamemuseum.org/api/items/7967> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1221" ;
+    dcterms:title "A1221" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6582> ;
+    ns1:identifier "A1221" .
+
+<https://id.analoggamemuseum.org/api/items/7971> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1220" ;
+    dcterms:title "A1220" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6586> ;
+    ns1:identifier "A1220" .
+
+<https://id.analoggamemuseum.org/api/items/8002> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1223" ;
+    dcterms:title "A1223" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6617> ;
+    ns1:identifier "A1223" .
+
+<https://id.analoggamemuseum.org/api/items/8003> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1222" ;
+    dcterms:title "A1222" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6618> ;
+    ns1:identifier "A1222" .
+
+<https://id.analoggamemuseum.org/api/items/8035> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1193" ;
+    dcterms:title "A1193" ;
+    ns1:identifier "A1193" .
+
+<https://id.analoggamemuseum.org/api/items/8036> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1195" ;
+    dcterms:title "A1195" ;
+    ns1:identifier "A1195" .
+
+<https://id.analoggamemuseum.org/api/items/8037> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1194" ;
+    dcterms:title "A1194" ;
+    ns1:identifier "A1194" .
+
+<https://id.analoggamemuseum.org/api/items/8039> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1197" ;
+    dcterms:title "A1197" ;
+    ns1:identifier "A1197" .
+
+<https://id.analoggamemuseum.org/api/items/8047> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1201" ;
+    dcterms:title "A1201" ;
+    ns1:identifier "A1201" .
+
+<https://id.analoggamemuseum.org/api/items/8048> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1200" ;
+    dcterms:title "A1200" ;
+    ns1:identifier "A1200" .
+
+<https://id.analoggamemuseum.org/api/items/8049> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1198" ;
+    dcterms:title "A1198" ;
+    ns1:identifier "A1198" .
+
+<https://id.analoggamemuseum.org/api/items/8050> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1202" ;
+    dcterms:title "A1202" ;
+    ns1:identifier "A1202" .
+
+<https://id.analoggamemuseum.org/api/items/8066> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1206" ;
+    dcterms:title "A1206" ;
+    ns1:identifier "A1206" .
+
+<https://id.analoggamemuseum.org/api/items/8068> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1205" ;
+    dcterms:title "A1205" ;
+    ns1:identifier "A1205" .
+
+<https://id.analoggamemuseum.org/api/items/8069> ns2:modified "2026-01-08T18:24:39+00:00"^^xsd:dateTime ;
+    ns2:title "A1204" ;
+    dcterms:title "A1204" ;
+    ns1:identifier "A1204" .
+
+<https://id.analoggamemuseum.org/api/items/8073> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1203" ;
+    dcterms:title "A1203" ;
+    ns1:identifier "A1203" .
+
+<https://id.analoggamemuseum.org/api/items/8077> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1210" ;
+    dcterms:title "A1210" ;
+    ns1:identifier "A1210" .
+
+<https://id.analoggamemuseum.org/api/items/8080> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1211" ;
+    dcterms:title "A1211" ;
+    ns1:identifier "A1211" .
+
+<https://id.analoggamemuseum.org/api/items/8081> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6695> .
+
+<https://id.analoggamemuseum.org/api/items/8087> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6701> .
+
+<https://id.analoggamemuseum.org/api/items/8088> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6702> .
+
+<https://id.analoggamemuseum.org/api/items/8090> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6704> .
+
+<https://id.analoggamemuseum.org/api/items/8091> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6705> .
+
+<https://id.analoggamemuseum.org/api/items/8092> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1225" ;
+    dcterms:title "A1225" ;
+    ns1:identifier "A1225" .
+
+<https://id.analoggamemuseum.org/api/items/8093> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6707> .
+
+<https://id.analoggamemuseum.org/api/items/8095> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6709> .
+
+<https://id.analoggamemuseum.org/api/items/8096> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1228" ;
+    dcterms:title "A1228" ;
+    ns1:identifier "A1228" .
+
+<https://id.analoggamemuseum.org/api/items/8097> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1214" ;
+    dcterms:title "A1214" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6711> ;
+    ns1:identifier "A1214" .
+
+<https://id.analoggamemuseum.org/api/items/8098> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6723> ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8099> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1226" ;
+    dcterms:title "A1226" ;
+    ns1:identifier "A1226" .
+
+<https://id.analoggamemuseum.org/api/items/8100> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6713> .
+
+<https://id.analoggamemuseum.org/api/items/8104> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1227" ;
+    dcterms:title "A1227" ;
+    ns1:identifier "A1227" .
+
+<https://id.analoggamemuseum.org/api/items/8108> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6721> .
+
+<https://id.analoggamemuseum.org/api/items/8116> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6729> ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8118> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1247" ;
+    dcterms:title "A1247" ;
+    ns1:identifier "A1247" .
+
+<https://id.analoggamemuseum.org/api/items/8119> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6732> .
+
+<https://id.analoggamemuseum.org/api/items/8120> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6733> .
+
+<https://id.analoggamemuseum.org/api/items/8121> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1248" ;
+    dcterms:title "A1248" ;
+    ns1:identifier "A1248" .
+
+<https://id.analoggamemuseum.org/api/items/8122> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6735> ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8123> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6736> .
+
+<https://id.analoggamemuseum.org/api/items/8124> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6737> .
+
+<https://id.analoggamemuseum.org/api/items/8125> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6738> ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8126> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1254" ;
+    dcterms:title "A1254" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6739> ;
+    ns1:identifier "A1254" ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8127> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6740> .
+
+<https://id.analoggamemuseum.org/api/items/8130> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6743> .
+
+<https://id.analoggamemuseum.org/api/items/8131> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1255" ;
+    dcterms:title "A1255" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6744> ;
+    ns1:identifier "A1255" ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8132> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6745> ;
+    ns1:provenance "萬印堂より寄贈、2024年7月" .
+
+<https://id.analoggamemuseum.org/api/items/8135> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1259" ;
+    dcterms:title "A1259" ;
+    ns1:identifier "A1259" .
+
+<https://id.analoggamemuseum.org/api/items/8184> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1242" ;
+    dcterms:title "A1242" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6797> ;
+    ns1:identifier "A1242" ;
+    ns1:provenance "Kコレクションとして2021年7月に受け入れ" .
+
+<https://id.analoggamemuseum.org/api/items/8189> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1243" ;
+    dcterms:title "A1243" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6802> ;
+    ns1:identifier "A1243" .
+
+<https://id.analoggamemuseum.org/api/items/8210> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1245" ;
+    dcterms:title "A1245" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6817> ;
+    ns1:identifier "A1245" .
+
+<https://id.analoggamemuseum.org/api/items/8211> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1246" ;
+    dcterms:title "A1246" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6818> ;
+    ns1:identifier "A1246" ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2023春）" .
+
+<https://id.analoggamemuseum.org/api/items/8212> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime .
+
+<https://id.analoggamemuseum.org/api/items/8213> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1252" ;
+    dcterms:title "A1252" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6820> ;
+    ns1:identifier "A1252" ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2023春）" .
+
+<https://id.analoggamemuseum.org/api/items/8214> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1253" ;
+    dcterms:title "A1253" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6821> ;
+    ns1:identifier "A1253" ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2023春）" .
+
+<https://id.analoggamemuseum.org/api/items/8215> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6822> ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2023春）" .
+
+<https://id.analoggamemuseum.org/api/items/8216> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6823> ;
+    ns1:provenance "アークライトより寄贈、ゲームマーケットサンプル（2023春）" .
+
+<https://id.analoggamemuseum.org/api/items/8217> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1256" ;
+    dcterms:title "A1256" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6824> ;
+    ns1:identifier "A1256" .
+
+<https://id.analoggamemuseum.org/api/items/8219> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1249" ;
+    dcterms:title "A1249" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6825> ;
+    ns1:identifier "A1249" .
+
+<https://id.analoggamemuseum.org/api/items/8220> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1250" ;
+    dcterms:title "A1250" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6826> ;
+    ns1:identifier "A1250" .
+
+<https://id.analoggamemuseum.org/api/items/8221> ns2:modified "2026-01-08T18:24:40+00:00"^^xsd:dateTime ;
+    ns2:title "A1251" ;
+    dcterms:title "A1251" ;
+    ns1:exemplarOf <https://id.analoggamemuseum.org/api/items/6827> ;
+    ns1:identifier "A1251" .
+
+<https://id.analoggamemuseum.org/api/items/8363> ns2:modified "2026-01-08T18:24:41+00:00"^^xsd:dateTime ;
+    ns2:title "A1321" ;
+    dcterms:title "A1321" ;
+    ns1:identifier "A1321" .
+
+<https://id.analoggamemuseum.org/api/items/8410> ns2:modified "2026-01-08T18:24:41+00:00"^^xsd:dateTime ;
+    ns2:title "A1328" ;
+    dcterms:title "A1328" ;
+    ns1:identifier "A1328" .
+
+<https://id.analoggamemuseum.org/api/items/8411> ns2:modified "2026-01-08T18:24:41+00:00"^^xsd:dateTime ;
+    ns2:title "A1329" ;
+    dcterms:title "A1329" ;
+    ns1:identifier "A1329" .
+
